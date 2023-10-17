@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1G86M/W7PEWRvlz6xDhZkYyV7V2PNEk6f3hMuhld+Bs=",
+  "Source": "KubAPI",
+  "BasePath": "_content/KubAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

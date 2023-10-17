@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kub-app-deployment
+  annotations: 
+    kubernetes.io/change-cause: "Updating my docker image from v1 to v2"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: kub-app
+  template:
+    metadata:
+      name: mykubapi
+      labels:
+        env: prod
+        app: kub-app
+        app.kubernetes.io/name: kub-app
+    spec:
+      containers:
+        - name: kub-app
+          image: esataydin/kubapi:v2
+          ports:
+            - containerPort: 80
+              name: http-web-api
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          env:
+          - name: ASPNETCORE_URLS
+            value: http://+:80 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-loadbalancer-service
+spec:
+  selector:
+    app.kubernetes.io/name: kub-app
+  ports:
+    - name: kub-app-port
+      protocol: TCP
+      port: 8080
+      targetPort: 80
+  type: LoadBalancer
